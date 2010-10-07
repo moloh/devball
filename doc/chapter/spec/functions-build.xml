@@ -1,0 +1,125 @@
+<section>
+<title>Build functions reference</title>
+
+<para>
+The following functions are useful during build related phases, including
+<function>src_fetch</function>, <function>src_unpack</function>,
+<function>src_configure</function>, <function>src_compile</function> and
+<function>src_install</function>
+</para>
+
+<informaltable frame="none">
+	<tgroup cols="2">
+	<?dbhtml cellpadding="5" ?>
+	<colspec colwidth="175px" />
+	<thead>
+	<row>
+		<entry>Function</entry>
+		<entry>Details</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><function>unpack</function> <parameter
+		class="function">files</parameter></entry>
+		<entry>Unpack specified file(s). It can be either single <type>String</type>
+		or <type>Array</type>. Function supports tar, gzip and bzip2
+		archives.</entry>
+	</row>
+	<row>
+		<entry><function>patch</function> <parameter
+		class="function">files</parameter>, <parameter
+		class="function">options</parameter></entry>
+		<entry>Process specified patch(es). It can be either single <type>String</type>
+		or <type>Array</type>. Function automatically figures out which patch level
+		should be used, but it is possible to overwrite this behaviour, by
+		specifying correct options, i.e. <option>-p1</option>.</entry>
+	</row>
+	<row>
+		<entry><function>autoreconf</function></entry>
+		<entry>Rebuilds autotools enabled build system by calling
+		<command>aclocal</command>, <command>autoheader</command>,
+		<command>automake</command>, <command>autoconf</command> and
+		<command>libtoolize</command> system utilities.</entry>
+	</row>
+	<row>
+		<entry><function>configure</function> <parameter
+		class="function">myconf</parameter></entry>
+		<entry>Function executes <command>./configure</command> script with a set of
+		flags to indicate correct locations for files (relative to "<filename
+		class="directory">#{_ROOT}</filename>" and "<filename
+		class="directory">#{_PREFIX}</filename>" paths. It additionally sets up
+		<option>--build</option> and <option>--host</option> flags according to
+		<varname>Config._CHOST</varname> configuration variable. Custom flags may be
+		specified  using <parameter class="function">myconf</parameter>
+		<type>String</type> parameter.</entry>
+	</row>
+	<row>
+		<entry><function>opt_with</function> <parameter
+		class="function">*flags</parameter></entry>
+		<entry>Creates string with multiple "--with-<varname>flag</varname>" flags
+		using supplied <parameter class="function">*flags</parameter>
+		parameter. This may be helpful to generate multiple
+		<command>./configure</command> options.</entry>
+	</row>
+	<row>
+		<entry><function>opt_without</function> <parameter
+		class="function">*flags</parameter></entry>
+		<entry>Creates string with multiple "--without-<varname>flag</varname>"
+		flags using supplied <parameter class="function">*flags</parameter>
+		parameter. This may be helpful to generate multiple
+		<command>./configure</command> options.</entry>
+	</row>
+	<row>
+		<entry><function>opt_enable</function> <parameter
+		class="function">*flags</parameter></entry>
+		<entry>Creates string with multiple "--enable-<varname>flag</varname>" flags
+		using supplied <parameter class="function">*flags</parameter> parameter.
+		This may be helpful to generate multiple <command>./configure</command>
+		options.</entry>
+	</row>
+	<row>
+		<entry><function>opt_disable</function> <parameter
+		class="function">*flags</parameter></entry>
+		<entry>Creates string with multiple "--disable-<varname>flag</varname>"
+		flags using supplied <parameter class="function">*flags</parameter>
+		parameter. This may be helpful to generate multiple
+		<command>./configure</command> options.</entry>
+	</row>
+	<row>
+		<entry><function>make</function> <parameter
+		class="function">options</parameter></entry>
+		<entry>Function executes <command>make</command> command and passes all
+		specified <parameter class="function">options</parameter>. It always uses
+		<varname>_MAKEFLAGS</varname> as parameters, however <parameter
+		class="function">options</parameter> do overwrite them.</entry>
+	</row>
+	<row>
+		<entry><function>make_install</function> <parameter
+		class="function">options</parameter></entry>
+		<entry>Function executes <command>make install</command> command and passes
+		all specified <parameter class="function">options</parameter>. It always
+		uses <varname>_MAKEFLAGS</varname> as parameters, however <parameter
+		class="function">options</parameter> do overwrite them. This function is
+		provided for legacy <filename>Makefiles</filename> and sets multiple
+		<command>make</command> variables to install files in correct locations
+		inside "<filename class="directory">#{_DESTDIR}</filename>" directory. It
+		should only be used if <code language="ruby">make Q%{DESTDIR="#{_D}"
+		install}</code> is unsuitable.</entry>
+	</row>
+	<row>
+		<entry><function>http_download</function> <parameter
+		class="function">name</parameter>, <parameter
+		class="function">url</parameter></entry>
+		<entry>Function downloads specified <parameter
+		class="function">url</parameter> and saves it as file <parameter
+		class="function">name</parameter>.</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

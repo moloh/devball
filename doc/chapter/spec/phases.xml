@@ -1,0 +1,326 @@
+<section>
+<title>Spec phases</title>
+
+<para>
+When certain spec is installed or uninstalled a number of phases is executed.
+Each phase is used to execute certain action related to spec installation such
+as unpacking sources or compilation. Execution order and working directories are
+defined as follows:
+</para>
+
+<table frame="none">
+<title>Spec installation phase order</title>
+	<tgroup cols="2">
+	<colspec colnum="2" align="center" />
+	<thead>
+	<row>
+		<entry>Phase</entry>
+		<entry>Working directory</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><function>pkg_config</function></entry>
+		<entry>"<filename class="directory">#{_WORKDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>src_fetch</function></entry>
+		<entry>"<filename class="directory">#{_WORKDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>src_unpack</function></entry>
+		<entry>"<filename class="directory">#{_WORKDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>src_prepare</function></entry>
+		<entry>"<filename class="directory">#{_SRCDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>src_configure</function></entry>
+		<entry>"<filename class="directory">#{_SRCDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>src_compile</function></entry>
+		<entry>"<filename class="directory">#{_SRCDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>src_install</function></entry>
+		<entry>"<filename class="directory">#{_SRCDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>pkg_preinstall</function></entry>
+		<entry>"<filename class="directory">#{_SRCDIR}</filename>"</entry>
+	</row>
+	<row>
+		<entry><function>pkg_postinstall</function></entry>
+		<entry>"<filename class="directory">#{_SRCDIR}</filename>"</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</table>
+
+<table frame="none">
+<title>Spec uninstallation phase order</title>
+	<tgroup cols="2">
+	<colspec colnum="2" align="center" />
+	<thead>
+	<row>
+		<entry>Phase</entry>
+		<entry>Working directory</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><function>pkg_preuninstall</function></entry>
+		<entry>(not set)</entry>
+	</row>_WORKDIR
+	<row>
+		<entry><function>pkg_postuninstall</function></entry>
+		<entry>(not set)</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</table>
+
+<para>
+Default implementations of <function>src_unpack</function>,
+<function>src_prepare</function>, <function>src_configure</function>,
+<function>src_compile</function> and <function>src_install</function> are
+defined for common scenario of autotools enabled application. When certain
+customization of phase is needed default implementation may be still called
+using <function>default_*</function> form, i.e.
+<function>default_src_unpack</function>.
+</para>
+
+<note>
+<para>
+Not defined or undefined phases are skipped.
+</para>
+</note>
+
+<section>
+<title><function>pkg_config</function></title>
+
+<para>
+Phase that can be used to perform initial configuration of the environment,
+check runtime requirements or execute some actions before actual installation of
+the spec.
+</para>
+</section>
+
+<section>
+<title><function>src_fetch</function></title>
+
+<para>
+This phase should download all sources that will be used in all subsequent
+phases. Default <function>src_fetch</function> is not defined as we assume that
+files are stored either in "<filename class="directory">#{_FILESDIR}</filename>"
+or "<filename class="directory">#{_DISTFILESDIR}</filename>".
+</para>
+
+<example>
+<title>Default <function>src_fetch</function> phase implementation</title>
+<programlisting language="ruby">
+def default_src_fetch
+end
+</programlisting>
+</example>
+
+</section>
+
+<section>
+<title><function>src_unpack</function></title>
+
+<para>
+This phase should extract any spec sources and put them inside "<filename
+class="directory">#{_SRCDIR}</filename>" directory. Default implementation
+unpacks all <varname>_FILES</varname>.
+</para>
+
+<example>
+<title>Default <function>src_unpack</function> phase implementation</title>
+<programlisting language="ruby">
+def default_src_unpack
+	unpack _FILES
+end
+</programlisting>
+</example>
+
+</section>
+
+<section>
+<title><function>src_prepare</function></title>
+
+<para>
+This phase should prepare sources for compilation. This include patching or
+manual modification of spec source files before acutall compilation phase.
+Default implementation applies all patches from <varname>_PATCHES</varname>
+variable.
+</para>
+
+<example>
+<title>Default <function>src_prepare</function> phase implementation</title>
+<programlisting language="ruby">
+def default_src_prepare
+	patch _PATCHES
+end
+</programlisting>
+</example>
+
+</section>
+
+<section>
+<title><function>src_configure</function></title>
+
+<para>
+This phase should configure sources to generate are compilation related files.
+This usually involves calling configure script. Default implementation executes
+configure script using a set of flags to indicate installation prefix location,
+system architecture, etc.
+</para>
+
+<example>
+<title>Default <function>src_configure</function> phase implementation</title>
+<programlisting language="ruby">
+def default_src_configure
+	configure
+end
+</programlisting>
+</example>
+
+</section>
+
+<section>
+<title><function>src_compile</function></title>
+
+<para>
+This phase should compile and build spec. Default implementation executes
+<command>make</command> command.
+</para>
+
+<example>
+<title>Default <function>src_compile</function> phase implementation</title>
+<programlisting language="ruby">
+def default_src_compile
+	make
+end
+</programlisting>
+</example>
+
+<formalpara>
+<title><function>src_compile</function> phase parallelization</title>
+<para>
+Some installation <filename>Makefile</filename> files may not be designed to be
+parallelized. As <function>make</function> function behaviour is customized by
+<varname>Config._MAKEFLAGS</varname> configuration option it may be needed to
+force sequential installation using <option>-j1</option> option as in <link
+linkend="tip.phases.sequential">example</link>.
+</para>
+</formalpara>
+
+</section>
+
+<section>
+<title><function>src_install</function></title>
+
+<para>
+This phase should install spec to "<filename
+class="directory">#{_DESTDIR}</filename>" (or it's alias <varname>_D</varname>)
+directory. Default implementation executes <command>make install</command> with
+<varname>DESTDIR</varname> variable to specify temporary install location.
+</para>
+
+<example>
+<title>Default <function>src_install</function> phase implementation</title>
+<programlisting language="ruby">
+def default_src_install
+	make %Q{DESTDIR="#{_D}" install}
+end
+</programlisting>
+</example>
+
+<formalpara>
+<title><function>src_install</function> phase notes.</title>
+<para>
+Often default implementation will be enough to install spec files into correct
+temporary location. Autotools powered packages usually support this, but in the
+case of customized build systems it may be necessary to either patch
+<filename>Makefile</filename> files or use other designated make variable (i.e.
+<varname>INSTALL_PREFIX</varname>). In some cases <function>install</function>
+may help as it setup some other make options, but generally it shouldn't be
+used.
+</para>
+</formalpara>
+
+<formalpara>
+<title><function>src_install</function> phase parallelization</title>
+<para>
+Some installation <filename>Makefile</filename> files may not be designed to be
+parallelized. As <function>make</function> function behaviour is customized by
+<varname>Config._MAKEFLAGS</varname> configuration option it may be needed to
+force sequential installation using <option>-j1</option> option as in <link
+linkend="tip.phases.sequential">example</link>.
+</para>
+</formalpara>
+
+<tip id="tip.phases.sequential">
+<title>Force sequential installation</title>
+<programlisting language="ruby">
+def src_install
+	make %Q{-j1 DESTDIR="#{_D}" install}
+end
+</programlisting>
+</tip>
+
+</section>
+
+<section>
+<title><function>pkg_preinstall</function></title>
+
+<para>
+This utility phase is executed before spec image installation into "<filename
+class="directory">#{_ROOT}</filename>". It may be used to modify image files
+inside "<filename class="directory">#{_D}</filename>" for a particular system or
+adjust configuration files inside "<filename
+class="directory">#{_D}/#{ROOT}/etc</filename>". Default implementation is
+empty.
+</para>
+</section>
+
+<section>
+<title><function>pkg_postinstall</function></title>
+
+<para>
+This utility phase is executed after spec image installation into "<filename
+class="directory">#{_ROOT}</filename>". It may be used to display some
+additional information or warnings to the user. Default implementation is empty.
+</para>
+</section>
+
+<section>
+<title><function>pkg_preuninstall</function></title>
+
+<para>
+This utility phase is executed before spec image removed from "<filename
+class="directory">#{_ROOT}</filename>". It may be used to clean files generated
+by normal use of the applications installed by spec such as temporary files.
+Default implementation is empty.
+</para>
+</section>
+
+<section>
+<title><function>pkg_postuninstall</function></title>
+
+<para>
+This utility phase is executed after spec image removal from "<filename
+class="directory">#{_ROOT}</filename>". It may be used to update symlinks or
+cache files that may contain data related to removed spec, i.e. mime database,
+icon cache, etc. Default implementation is empty.
+</para>
+</section>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

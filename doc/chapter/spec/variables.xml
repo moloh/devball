@@ -1,0 +1,273 @@
+<section>
+<title>Variables</title>
+
+<para>
+There are number of special variables, which must be set in spec or may be
+optionally specified.
+</para>
+
+<warning>
+<para>
+All variables are implemented as Ruby instance variables, but specs should only
+use defined attribute accessors to access variables or special functions to
+modify variable values as in <link linkend="tip.variables">tip</link>.
+</para>
+</warning>
+
+<formalpara>
+<title>Common predefined variables</title>
+<para>
+The following variables are defined for continence:
+</para>
+</formalpara>
+
+<informaltable frame="none" >
+	<tgroup cols="3">
+	<colspec colname="1" />
+	<colspec colname="2" />
+	<colspec colname="3" colwidth="100px" align="center" />
+	<thead>
+	<row>
+		<entry>Variable</entry>
+		<entry>Meaning</entry>
+		<entry>Example</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><varname>_SPEC</varname></entry>
+		<entry>Spec filename, it includes possible <function>inherit</function>
+		part</entry>
+	</row>
+	<row>
+		<entry><varname>_P</varname>|<varname>_PACKAGE</varname></entry>
+		<entry>Spec name and version</entry>
+		<entry><literal>devball-0.9</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_PN</varname>|<varname>_NAME</varname></entry>
+		<entry>Spec name</entry>
+		<entry><literal>devball</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_PV</varname>|<varname>_VERSION</varname></entry>
+		<entry>Spec version</entry>
+		<entry><literal>0.9</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_BUILDDIR</varname></entry>
+		<entry>Path to root of temporary directory that is used for all build
+		related operation of the spec. Value: "<filename
+		class="directory">#{Config._TMP}/#{_P}</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_WORKDIR</varname></entry>
+		<entry>Path to the temporary spec build directory. All spec related files
+		are processed in this directory. Value: "<filename
+		class="directory">#{_BUILDDIR}/work</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_T</varname>|<varname>_TEMPDIR</varname></entry>
+		<entry>Path to temporary directory which may be used in spec.  Value:
+		"<filename class="directory">#{_BUILDDIR}/temp</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_D</varname>|<varname>_DESTDIR</varname></entry>
+		<entry>Path to the temporary install directory. All spec files should be
+		installed into this "fake" image directory. During image installation phase
+		those files will be moved to the corresponding <varname>_ROOT</varname>
+		relative paths. Value: "<filename
+		class="directory">#{_BUILDDIR}/image</filename>"</entry>
+	</row>
+	<!-- separator row for 'fake' footer -->
+	<row><entry></entry><entry></entry><entry></entry></row>
+	<row>
+		<entry align="center" namest="1" nameend="3">NOTE: Examples are for
+		<filename>devball:gem-0.9.spec</filename> spec</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+<formalpara>
+<title>Configuration related variables</title>
+<para>
+The following variables wrap devball configuration and are defined for
+convenience:
+</para>
+</formalpara>
+
+<informaltable frame="none" >
+	<tgroup cols="3">
+	<thead>
+	<row>
+		<entry>Variable</entry>
+		<entry>Meaning</entry>
+		<entry>Value</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><varname>_ROOT</varname></entry>
+		<entry>Path to root directory where all spec should be installed</entry>
+		<entry>"<filename class="directory">#{Config._ROOT}</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_PREFIX</varname></entry>
+		<entry>Prefix path for installation, preferably should be inside
+		<varname>_ROOT</varname></entry>
+		<entry>"<filename class="directory">#{Config._PREFIX}</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_SPECSDIR</varname></entry>
+		<entry>Path to the directory where all spec files are stored</entry>
+		<entry>"<filename class="directory">#{Config._SPECS}</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_FILESDIR</varname></entry>
+		<entry>Path to the directory where all spec files are stored. Usually this
+		path is treated as read-only, however this is only convention in default
+		extensions.</entry>
+		<entry>"<filename class="directory">#{Config._FILES}</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_PATCHESDIR</varname></entry>
+		<entry>Path to the directory where all patches for specs are stored. Patches
+		may be stored inside subdirectories.</entry>
+		<entry>"<filename class="directory">#{Config._PATCHES}</filename>"</entry>
+	</row>
+	<row>
+		<entry><varname>_DISTFILESDIR</varname></entry>
+		<entry>Path to the directory where all downloaded files should be
+		stored.</entry>
+		<entry>"<filename class="directory">#{Config._DISTFILES}</filename>"</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+<note>
+Note that while <varname>Config._FILES</varname>,
+<varname>Config._PATCHESDIR</varname>, <varname>Config._DISTFILES</varname> are
+separate convenience variables they may be defined in devball configuration as
+single path in file system.
+</note>
+
+<formalpara>
+<title>System information convenience variables</title>
+<para>
+The following variables wrap system configuration as detected during devball
+initialization.
+</para>
+</formalpara>
+
+<informaltable frame="none">
+	<tgroup cols="3">
+	<colspec colnum="3" colwidth="200px" />
+	<thead>
+	<row>
+		<entry>Variable</entry>
+		<entry>Meaning</entry>
+		<entry>Values</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><varname>_ARCH</varname></entry>
+		<entry>System architecture</entry>
+		<entry><literal>Arch::X86</literal>, <literal>Arch::X86_64</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_PLATFORM</varname></entry>
+		<entry>System platform</entry>
+		<entry><literal>Platform::Linux</literal>,
+		<literal>Platform::Darwin</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_RELEASE</varname></entry>
+		<entry>System release, e.g. Linux kernel version, Mac OS X version. Note
+		that detailed values are only specified for certain releases of Mac OS X.
+		Linux releases are discriminated through major kernel version.</entry>
+		<entry><literal>Release::Linux_2_4</literal>,
+		<literal>Release::Linux_2_6</literal>,
+		<literal>Release::Tiger</literal>,
+		<literal>Release::Leopard</literal>,
+		<literal>Release::SnowLeopard</literal>,
+		<literal>Release::Other</literal></entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+<formalpara>
+<title>Important spec variables</title>
+<para>
+The following variables usually should be explicitly set either inside spec or
+in the inherited extensions.
+</para>
+</formalpara>
+
+<informaltable frame="none">
+	<tgroup cols="3">
+	<thead>
+	<row>
+		<entry>Variable</entry>
+		<entry>Meaning</entry>
+		<entry>Default</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><varname>_DEPENDENCIES</varname></entry>
+		<entry>A list of spec dependencies, all specs mentioned in this variable
+		will be build before building this spec</entry>
+		<entry><literal>[]</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_FILES</varname></entry>
+		<entry>Spec source files, by default all those file are unpacked into
+		"<filename class="directory">#{_WORKDIR}</filename>"</entry> directory.
+		<entry><literal>[]</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_PATCHES</varname></entry>
+		<entry>Spec patches, by default all patch files are applied to the unpacked
+		sources.</entry>
+		<entry><literal>[]</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_FEATURES</varname></entry>
+		<entry>A list of features supported by spec.</entry>
+		<entry><literal>""</literal></entry>
+	</row>
+	<row>
+		<entry><varname>_SRCDIR</varname></entry>
+		<entry>Path to temporary build directory. All build related files should be
+		stored in this directory during <function>src_unpack</function> phase. It
+		should only be set if it is different than default value</entry>
+		<entry><literal>"#{_WORKDIR}/#{_P}"</literal></entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+<tip id="tip.variables">
+<para>
+Example spec that defines important variables.
+</para>
+
+<programlisting language="ruby">
+_FILES! "#{_P}-stable.tar.gz"
+_SRCDIR! "#{_WORKDIR}/#{_P}-stable"
+_DEPENDENCIES! "ncurses", "zlib"
+_FEATURES! "debug"
+</programlisting>
+</tip>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

@@ -1,0 +1,124 @@
+<section>
+<title>General functions reference</title>
+
+<para>
+The following functions are generally useful in specs and provide easy means to
+check for environment conditions or perform some general action. This category
+also includes function that are useful both in build and install related
+operations.
+</para>
+
+<informaltable frame="none">
+	<tgroup cols="2">
+	<?dbhtml cellpadding="5" ?>
+	<colspec colwidth="175px" />
+	<thead>
+	<row>
+		<entry>Function</entry>
+		<entry>Details</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><function>platform?</function> <parameter
+		class="function">platform</parameter></entry>
+		<entry>Check if system platform (<varname>Config._PLATFORM</varname>) is
+		<parameter class="function">platform</parameter></entry>
+	</row>
+	<row>
+		<entry><function>release?</function> <parameter
+		class="function">release</parameter></entry>
+		<entry>Check if system release (<varname>Config._RELEASE</varname>) is
+		<parameter class="function">release</parameter></entry>
+	</row>
+	<row>
+		<entry><function>exec</function> <parameter
+		class="function">command</parameter></entry>
+		<entry>Function executes <parameter class="function">command</parameter>.
+		All output is redirected to <constant>STDOUT</constant>.</entry>
+	</row>
+	<row>
+		<entry><function>exec_r</function> <parameter
+		class="function">command</parameter></entry>
+		<entry>Functions executes <parameter class="function">command</parameter>
+		and redirects all output into return value.</entry>
+	</row>
+	<row>
+		<entry><function>exec_v</function> <parameter
+		class="function">command</parameter>, <parameter
+		class="function">styled</parameter></entry>
+		<entry>Function echoes and executes <parameter
+		class="function">command</parameter>. If <parameter
+		class="function">styled</parameter> is <constant>true</constant> then
+		<parameter class="function">command</parameter> echo is styled, however
+		<parameter class="function">styled</parameter> is <constant>false</constant>
+		by default. All output is redirected to <constant>STDOUT</constant>.</entry>
+	</row>
+	<row>
+		<entry><function>cmd</function> <parameter
+		class="function">command</parameter>, <parameter
+		class="function">styled</parameter></entry>
+		<entry>Alias for <function>exec_v</function></entry>
+	</row>
+	<row>
+		<entry><function>cmd_redir</function> <parameter
+		class="function">command</parameter></entry>
+		<entry>Alias for <function>exec_r</function></entry>
+	</row>
+	<row>
+		<entry><function>sed</function> <parameter
+		class="function">input</parameter>, <parameter
+		class="function">output</parameter>, <parameter
+		class="function">*cmds</parameter></entry>
+		<entry>Function executes <command>sed</command> <parameter
+		class="function">*cmds</parameter> on <parameter
+		class="function">input</parameter> file and redirects output to <parameter
+		class="function">output</parameter> file. Note that <parameter
+		class="function">*cmds</parameter> are quoted using <constant>'</constant>
+		character</entry>
+	</row>
+	<row>
+		<entry><function>sed_i</function> <parameter
+		class="function">input</parameter>, <parameter
+		class="function">*cmds</parameter></entry>
+		<entry>Function executes <command>sed</command> <parameter
+		class="function">*cmds</parameter> on <parameter
+		class="function">input</parameter> file that is modified in-place. Note that
+		<parameter class="function">*cmds</parameter> are quoted using
+		<constant>'</constant> character</entry>
+	</row>
+	<row>
+		<entry><function>cd</function> <parameter
+		class="function">dir</parameter></entry>
+		<entry>Function changes current working directory to <parameter
+		class="function">dir</parameter>.</entry>
+	</row>
+	<row>
+		<entry><function>mkdir</function> <parameter
+		class="function">dir</parameter></entry>
+		<entry>Function creates directory <parameter
+		class="function">dir</parameter></entry>
+	</row>
+	<row>
+		<entry><function>mkdir_p</function> <parameter
+		class="function">dir</parameter></entry>
+		<entry>Function creates directory <parameter
+		class="function">dir</parameter> with all necessary parent
+		directories.</entry>
+	</row>
+	<row>
+		<entry><function>touch</function> <parameter
+		class="function">file</parameter></entry>
+		<entry>Function changes <parameter class="function">file</parameter>
+		timestamp. In the case when specified <parameter
+		class="function">file</parameter> does not exist function creates empty
+		<parameter class="function">file</parameter>.</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

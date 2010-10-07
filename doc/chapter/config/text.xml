@@ -1,0 +1,11 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>Configuration</title>
+
+<!-- include section -->
+<xi:include href="init.xml" />
+<xi:include href="file.xml" />
+<xi:include href="variables.xml" />
+
+</chapter>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

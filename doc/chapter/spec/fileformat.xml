@@ -1,0 +1,140 @@
+<section>
+<title>File format</title>
+
+<section>
+<title>Filename</title>
+
+<para>
+Spec should be named in the form
+<filename>name(:inherit)?-version.spec</filename>.
+</para>
+
+<para>
+A spec name may contain any of the characters <literal>[A-Za-z0-9+_-]</literal>.
+It must not begin with a hyphen, and must not end in a hyphen followed by one or
+more digits.
+</para>
+
+</section>
+
+<section>
+<title>Version</title>
+
+<para>
+Each version consists of three components
+<literal>number(letter)?(suffix)?</literal>. A version starts with number part
+that optionally may be followed by lowercase letter (this letter should not be
+used to indicate <literal>beta</literal> status).  Last optional part is single
+suffix that indicate kind of release, i.e.  <literal>beta</literal>,
+<literal>rc</literal>. Format for those components is as follows:
+</para>
+
+<informaltable frame="none">
+	<tgroup cols="2">
+	<thead>
+	<row>
+		<entry>component</entry>
+		<entry>format</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry>number</entry>
+		<entry><literal>[0-9]+(\.[0-9]+)*</literal></entry>
+	</row>
+	<row>
+		<entry>letter</entry>
+		<entry><literal>[a-z]</literal></entry>
+	</row>
+	<row>
+		<entry>suffix</entry>
+		<entry><literal>_alpha([0-9]+)?|_beta([0-9]+)?|_pre([0-9]+)?|_rc([0-9]+)?|_p([0-9]+)?</literal></entry>
+	</row>
+	</tbody>
+
+	</tgroup>
+</informaltable>
+
+<para>
+Versions are compared component by component moving from left to the
+right using following methods for processing each type of component:
+</para>
+
+<informaltable frame="none" >
+	<tgroup cols="2">
+	<thead>
+	<row>
+		<entry>component</entry>
+		<entry>methods</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry>number</entry>
+		<entry>strict integer comparison. In the case when one version is prefix of
+		the other then version with longer number part is greater, i.e.
+		<literal>1.0</literal> is less than <literal>1.0.0</literal>.</entry>
+	</row>
+	<row>
+		<entry>letter</entry>
+		<entry>alphabetical comparison, any letter is newer than no letter</entry>
+	</row>
+	<row>
+		<entry>suffix</entry>
+		<entry>If suffixes are equal then associated numbers are compared as
+		integers. Missing integer part is treated as <literal>0</literal>.</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+<para>
+Suffix component describes kind of release. The order and meaning is
+as follows:
+</para>
+
+<informaltable frame="none" >
+	<tgroup cols="2">
+	<thead>
+	<row>
+		<entry>suffix</entry>
+		<entry>meaning</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><literal>_alpha</literal></entry>
+		<entry>Alpha release (earliest)</entry>
+	</row>
+	<row>
+		<entry><literal>_beta</literal></entry>
+		<entry>Beta release</entry>
+	</row>
+	<row>
+		<entry><literal>_pre</literal></entry>
+		<entry>Pre release</entry>
+	</row>
+	<row>
+		<entry><literal>_rc</literal></entry>
+		<entry>Release candidate</entry>
+	</row>
+	<row>
+		<entry>(no suffix)</entry>
+		<entry>Normal release</entry>
+	</row>
+	<row>
+		<entry><literal>_p</literal></entry>
+		<entry>Patch level release</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+</section>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 ft=xml.docbook: -->

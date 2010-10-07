@@ -1,0 +1,26 @@
+<section>
+<title>Initialization</title>
+
+<para>
+During start-up devball probes execution environment and provides helper
+variables that can be used in specs. Devball checks system architecture,
+platform and system release. All of those may be used to customize behaviour of
+specs, i.e. patching sources only on Mac OS X platform.
+</para>
+
+<para>
+Additionally devball initializes may settings that customize internal behaviour,
+including installation prefix, location of specs, sources and patches, custom
+compilation and link flags. Those variables may be customized through devball
+<link linkend="section.config-file" >configuration file</link>.
+</para>
+
+<para>
+Complete reference of all configuration related variables that are initialized
+during devball startup can be found in <link
+linkend="section.config-variables">Variables section</link>.
+</para>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

@@ -1,0 +1,23 @@
+<section xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>Spec functions reference</title>
+
+<para>
+Spec by default may use many functions that are internally provided. It is also
+easy to extend current capabilities with <link
+linkend="section.spec-extensions">extensions</link>.
+</para>
+
+<warning>
+<para>
+In case of failure all functions raise <type>Error::Package</type> exception
+with textual message describing actual problem.
+</para>
+</warning>
+
+<xi:include href="functions-general.xml" />
+<xi:include href="functions-build.xml" />
+<xi:include href="functions-install.xml" />
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

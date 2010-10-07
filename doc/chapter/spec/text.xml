@@ -1,0 +1,13 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>Spec writing</title>
+
+<!-- include sections -->
+<xi:include href="fileformat.xml" />
+<xi:include href="variables.xml" />
+<xi:include href="extensions.xml" />
+<xi:include href="phases.xml" />
+<xi:include href="functions.xml" />
+
+</chapter>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

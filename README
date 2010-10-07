@@ -1,0 +1,15 @@
+Devball
+-------
+
+Simple tool for building and managing set of packages (specs) modelled after
+Gentoo Portage ebuild system.
+
+Todo
+----
+
+* smart dependency resolver with actual support for blockers, equal and less
+  than version specifiers.
+* gemification of package
+* complete the docbook documentation
+* sync script helper to download/upload complete binary build of packages.
+

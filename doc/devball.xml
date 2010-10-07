@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
+	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+>
+
+<book id="devball" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<bookinfo>
+	<author>Michal Kurgan</author>
+	<title>Devball Guide</title>
+</bookinfo>
+
+<xi:include href="chapter/general/text.xml" />
+<xi:include href="chapter/config/text.xml" />
+<xi:include href="chapter/spec/text.xml" />
+
+</book>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

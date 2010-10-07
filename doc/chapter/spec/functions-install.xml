@@ -1,0 +1,48 @@
+<section>
+<title>Install functions reference</title>
+
+<para>
+The following functions are useful to perform some installation related task.
+Those functions automatically handle <varname>_DESTDIR</varname> and
+<varname>_PREFIX</varname> variables to put files in correct locations. In most
+of the cases only relative paths to "<filename
+class="directory">#{_SRCDIR}</filename>" directory can be used as by default
+<function>src_install</function> phase is executed inside that directory.
+</para>
+
+<informaltable frame="none">
+	<tgroup cols="2">
+	<colspec colwidth="175px" />
+	<thead>
+	<row>
+		<entry>Function</entry>
+		<entry>Details</entry>
+	</row>
+	</thead>
+
+	<tbody valign="top">
+	<row>
+		<entry><function>install_bin</function> <parameter
+		class="function">files</parameter></entry>
+		<entry>Function installs specified <parameter
+		class="function">files</parameter> from "<filename
+		class="directory">#{_SRCDIR}</filename>" into <filename
+		class="directory">bin</filename> directory inside spec image. Function
+		automatically handles permissions.</entry>
+	</row>
+	<row>
+		<entry><function>install_man</function> <parameter
+		class="function">files</parameter></entry>
+		<entry>Function installs specified <parameter
+		class="function">files</parameter> from "<filename
+		class="directory">#{_SRCDIR}</filename>" into <filename
+		class="directory">man</filename> directory inside spec image. Function
+		automatically handles manual sections and permissions.</entry>
+	</row>
+	</tbody>
+	</tgroup>
+</informaltable>
+
+</section>
+
+<!-- vim: set noet ts=2 sts=2 sw=2 tw=80 ft=xml.docbook: -->

@@ -1,0 +1,276 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Devball Guide</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" title="Devball Guide"><div class="titlepage"><div><div><h1 class="title"><a name="devball"></a>Devball Guide</h1></div><div><div class="author"><h3 class="author"></h3></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="chapter"><a href="#id359726">1. General</a></span></dt><dt><span class="chapter"><a href="#id369398">2. Configuration</a></span></dt><dd><dl><dt><span class="section"><a href="#id369096">2.1. Initialization</a></span></dt><dt><span class="section"><a href="#id353163">2.2. Configuration file</a></span></dt><dt><span class="section"><a href="#section.config-variables">2.3. Variables</a></span></dt></dl></dd><dt><span class="chapter"><a href="#id372895">3. Spec writing</a></span></dt><dd><dl><dt><span class="section"><a href="#id359433">3.1. File format</a></span></dt><dd><dl><dt><span class="section"><a href="#id341062">3.1.1. Filename</a></span></dt><dt><span class="section"><a href="#id385853">3.1.2. Version</a></span></dt></dl></dd><dt><span class="section"><a href="#id386040">3.2. Variables</a></span></dt><dt><span class="section"><a href="#section.spec-extensions">3.3. Using extensions</a></span></dt><dt><span class="section"><a href="#id388101">3.4. Spec phases</a></span></dt><dd><dl><dt><span class="section"><a href="#id388365">3.4.1. <code class="function">pkg_config</code></a></span></dt><dt><span class="section"><a href="#id388377">3.4.2. <code class="function">src_fetch</code></a></span></dt><dt><span class="section"><a href="#id388414">3.4.3. <code class="function">src_unpack</code></a></span></dt><dt><span class="section"><a href="#id388448">3.4.4. <code class="function">src_prepare</code></a></span></dt><dt><span class="section"><a href="#id388479">3.4.5. <code class="function">src_configure</code></a></span></dt><dt><span class="section"><a href="#id388507">3.4.6. <code class="function">src_compile</code></a></span></dt><dt><span class="section"><a href="#id388565">3.4.7. <code class="function">src_install</code></a></span></dt><dt><span class="section"><a href="#id388672">3.4.8. <code class="function">pkg_preinstall</code></a></span></dt><dt><span class="section"><a href="#id388699">3.4.9. <code class="function">pkg_postinstall</code></a></span></dt><dt><span class="section"><a href="#id388717">3.4.10. <code class="function">pkg_preuninstall</code></a></span></dt><dt><span class="section"><a href="#id388735">3.4.11. <code class="function">pkg_postuninstall</code></a></span></dt></dl></dd><dt><span class="section"><a href="#id388757">3.5. Spec functions reference</a></span></dt><dd><dl><dt><span class="section"><a href="#id388783">3.5.1. General functions reference</a></span></dt><dt><span class="section"><a href="#id389205">3.5.2. Build functions reference</a></span></dt><dt><span class="section"><a href="#id389624">3.5.3. Install functions reference</a></span></dt></dl></dd></dl></dd></dl></div><div class="list-of-tables"><p><b>List of Tables</b></p><dl><dt>3.1. <a href="#id388112">Spec installation phase order</a></dt><dt>3.2. <a href="#id388278">Spec uninstallation phase order</a></dt></dl></div><div class="list-of-examples"><p><b>List of Examples</b></p><dl><dt>3.1. <a href="#id388399">Default <code class="function">src_fetch</code> phase implementation</a></dt><dt>3.2. <a href="#id388432">Default <code class="function">src_unpack</code> phase implementation</a></dt><dt>3.3. <a href="#id388463">Default <code class="function">src_prepare</code> phase implementation</a></dt><dt>3.4. <a href="#id388491">Default <code class="function">src_configure</code> phase implementation</a></dt><dt>3.5. <a href="#id388520">Default <code class="function">src_compile</code> phase implementation</a></dt><dt>3.6. <a href="#id388590">Default <code class="function">src_install</code> phase implementation</a></dt></dl></div><div class="chapter" title="Chapter 1. General"><div class="titlepage"><div><div><h2 class="title"><a name="id359726"></a>Chapter 1. General</h2></div></div></div></div><div class="chapter" title="Chapter 2. Configuration"><div class="titlepage"><div><div><h2 class="title"><a name="id369398"></a>Chapter 2. Configuration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#id369096">2.1. Initialization</a></span></dt><dt><span class="section"><a href="#id353163">2.2. Configuration file</a></span></dt><dt><span class="section"><a href="#section.config-variables">2.3. Variables</a></span></dt></dl></div><div class="section" title="2.1. Initialization"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id369096"></a>2.1. Initialization</h2></div></div></div><p>
+During start-up devball checks execution environment and provides helper
+variables that can be used in specs. Devball check system architecture, platform
+and specific system release that can be used to customize behaviour of specs,
+i.e. patching sources only on Mac OS X platform.
+</p><p>
+Complete reference of all configuration related variables that are initialized
+during devball startup can be found in <a class="link" href="#section.config-variables" title="2.3. Variables">Variables section</a>.
+</p></div><div class="section" title="2.2. Configuration file"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id353163"></a>2.2. Configuration file</h2></div></div></div><p>
+</p></div><div class="section" title="2.3. Variables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="section.config-variables"></a>2.3. Variables</h2></div></div></div><p>
+</p></div></div><div class="chapter" title="Chapter 3. Spec writing"><div class="titlepage"><div><div><h2 class="title"><a name="id372895"></a>Chapter 3. Spec writing</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#id359433">3.1. File format</a></span></dt><dd><dl><dt><span class="section"><a href="#id341062">3.1.1. Filename</a></span></dt><dt><span class="section"><a href="#id385853">3.1.2. Version</a></span></dt></dl></dd><dt><span class="section"><a href="#id386040">3.2. Variables</a></span></dt><dt><span class="section"><a href="#section.spec-extensions">3.3. Using extensions</a></span></dt><dt><span class="section"><a href="#id388101">3.4. Spec phases</a></span></dt><dd><dl><dt><span class="section"><a href="#id388365">3.4.1. <code class="function">pkg_config</code></a></span></dt><dt><span class="section"><a href="#id388377">3.4.2. <code class="function">src_fetch</code></a></span></dt><dt><span class="section"><a href="#id388414">3.4.3. <code class="function">src_unpack</code></a></span></dt><dt><span class="section"><a href="#id388448">3.4.4. <code class="function">src_prepare</code></a></span></dt><dt><span class="section"><a href="#id388479">3.4.5. <code class="function">src_configure</code></a></span></dt><dt><span class="section"><a href="#id388507">3.4.6. <code class="function">src_compile</code></a></span></dt><dt><span class="section"><a href="#id388565">3.4.7. <code class="function">src_install</code></a></span></dt><dt><span class="section"><a href="#id388672">3.4.8. <code class="function">pkg_preinstall</code></a></span></dt><dt><span class="section"><a href="#id388699">3.4.9. <code class="function">pkg_postinstall</code></a></span></dt><dt><span class="section"><a href="#id388717">3.4.10. <code class="function">pkg_preuninstall</code></a></span></dt><dt><span class="section"><a href="#id388735">3.4.11. <code class="function">pkg_postuninstall</code></a></span></dt></dl></dd><dt><span class="section"><a href="#id388757">3.5. Spec functions reference</a></span></dt><dd><dl><dt><span class="section"><a href="#id388783">3.5.1. General functions reference</a></span></dt><dt><span class="section"><a href="#id389205">3.5.2. Build functions reference</a></span></dt><dt><span class="section"><a href="#id389624">3.5.3. Install functions reference</a></span></dt></dl></dd></dl></div><div class="section" title="3.1. File format"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id359433"></a>3.1. File format</h2></div></div></div><div class="section" title="3.1.1. Filename"><div class="titlepage"><div><div><h3 class="title"><a name="id341062"></a>3.1.1. Filename</h3></div></div></div><p>
+Spec should be named in the form
+<code class="filename">name(:inherit)?-version.spec</code>.
+</p><p>
+A spec name may contain any of the characters <code class="literal">[A-Za-z0-9+_-]</code>.
+It must not begin with a hyphen, and must not end in a hyphen followed by one or
+more digits.
+</p></div><div class="section" title="3.1.2. Version"><div class="titlepage"><div><div><h3 class="title"><a name="id385853"></a>3.1.2. Version</h3></div></div></div><p>
+Each version consists of three components
+<code class="literal">number(letter)?(suffix)?</code>. A version starts with number part
+that optionally may be followed by lowercase letter (this letter should not be
+used to indicate <code class="literal">beta</code> status).  Last optional part is single
+suffix that indicate kind of release, i.e.  <code class="literal">beta</code>,
+<code class="literal">rc</code>. Format for those components is as follows:
+</p><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><thead><tr><th>component</th><th>format</th></tr></thead><tbody><tr><td>number</td><td><code class="literal">[0-9]+(\.[0-9]+)*</code></td></tr><tr><td>letter</td><td><code class="literal">[a-z]</code></td></tr><tr><td>suffix</td><td><code class="literal">_alpha([0-9]+)?|_beta([0-9]+)?|_pre([0-9]+)?|_rc([0-9]+)?|_p([0-9]+)?</code></td></tr></tbody></table></div><p>
+Versions are compared component by component moving from left to the
+right using following methods for processing each type of component:
+</p><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><thead><tr><th>component</th><th>methods</th></tr></thead><tbody><tr><td>number</td><td>strict integer comparison. In the case when one version is prefix of
+		the other then version with longer number part is greater, i.e.
+		<code class="literal">1.0</code> is less than <code class="literal">1.0.0</code>.</td></tr><tr><td>letter</td><td>alphabetical comparison, any letter is newer than no letter</td></tr><tr><td>suffix</td><td>If suffixes are equal then associated numbers are compared as
+		integers. Missing integer part is treated as <code class="literal">0</code>.</td></tr></tbody></table></div><p>
+Suffix component describes kind of release. The order and meaning is
+as follows:
+</p><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><thead><tr><th>suffix</th><th>meaning</th></tr></thead><tbody><tr><td><code class="literal">_alpha</code></td><td>Alpha release (earliest)</td></tr><tr><td><code class="literal">_beta</code></td><td>Beta release</td></tr><tr><td><code class="literal">_pre</code></td><td>Pre release</td></tr><tr><td><code class="literal">_rc</code></td><td>Release candidate</td></tr><tr><td>(no suffix)</td><td>Normal release</td></tr><tr><td><code class="literal">_p</code></td><td>Patch level release</td></tr></tbody></table></div></div></div><div class="section" title="3.2. Variables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id386040"></a>3.2. Variables</h2></div></div></div><p>
+There are number of special variables, which must be set in spec or may be
+optionally specified.
+</p><div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+All variables are implemented as Ruby instance variables, but specs should only
+use defined attribute accessors to access variables or special functions to
+modify variable values as in <a class="link" href="#tip.variables" title="Tip">tip</a>.
+</p></div><p title="Common predefined variables"><b>Common predefined variables. </b>
+The following variables are defined for continence:
+</p><div class="informaltable"><table border="0"><colgroup><col><col><col width="100px" align="center"></colgroup><thead><tr><th>Variable</th><th>Meaning</th><th align="center">Example</th></tr></thead><tbody><tr><td><code class="varname">_SPEC</code></td><td>Spec filename, it includes possible <code class="function">inherit</code>
+		part</td><td class="auto-generated"> </td></tr><tr><td><code class="varname">_P</code>|<code class="varname">_PACKAGE</code></td><td>Spec name and version</td><td align="center"><code class="literal">devball-0.9</code></td></tr><tr><td><code class="varname">_PN</code>|<code class="varname">_NAME</code></td><td>Spec name</td><td align="center"><code class="literal">devball</code></td></tr><tr><td><code class="varname">_PV</code>|<code class="varname">_VERSION</code></td><td>Spec version</td><td align="center"><code class="literal">0.9</code></td></tr><tr><td><code class="varname">_BUILDDIR</code></td><td>Path to root of temporary directory that is used for all build
+		related operation of the spec. Value: "<code class="filename">#{Config._TMP}/#{_P}</code>"</td><td class="auto-generated"> </td></tr><tr><td><code class="varname">_WORKDIR</code></td><td>Path to the temporary spec build directory. All spec related files
+		are processed in this directory. Value: "<code class="filename">#{_BUILDDIR}/work</code>"</td><td class="auto-generated"> </td></tr><tr><td><code class="varname">_T</code>|<code class="varname">_TEMPDIR</code></td><td>Path to temporary directory which may be used in spec.  Value:
+		"<code class="filename">#{_BUILDDIR}/temp</code>"</td><td class="auto-generated"> </td></tr><tr><td><code class="varname">_D</code>|<code class="varname">_DESTDIR</code></td><td>Path to the temporary install directory. All spec files should be
+		installed into this "fake" image directory. During image installation phase
+		those files will be moved to the corresponding <code class="varname">_ROOT</code>
+		relative paths. Value: "<code class="filename">#{_BUILDDIR}/image</code>"</td><td class="auto-generated"> </td></tr><tr><td> </td><td> </td><td align="center"> </td></tr><tr><td colspan="3" align="center">NOTE: Examples are for
+		<code class="filename">devball:gem-0.9.spec</code> spec</td></tr></tbody></table></div><p title="Configuration related variables"><b>Configuration related variables. </b>
+The following variables wrap devball configuration and are defined for
+convenience:
+</p><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><thead><tr><th>Variable</th><th>Meaning</th><th>Value</th></tr></thead><tbody><tr><td><code class="varname">_ROOT</code></td><td>Path to root directory where all spec should be installed</td><td>"<code class="filename">#{Config._ROOT}</code>"</td></tr><tr><td><code class="varname">_PREFIX</code></td><td>Prefix path for installation, preferably should be inside
+		<code class="varname">_ROOT</code></td><td>"<code class="filename">#{Config._PREFIX}</code>"</td></tr><tr><td><code class="varname">_SPECSDIR</code></td><td>Path to the directory where all spec files are stored</td><td>"<code class="filename">#{Config._SPECS}</code>"</td></tr><tr><td><code class="varname">_FILESDIR</code></td><td>Path to the directory where all spec files are stored. Usually this
+		path is treated as read-only, however this is only convention in default
+		extensions.</td><td>"<code class="filename">#{Config._FILES}</code>"</td></tr><tr><td><code class="varname">_PATCHESDIR</code></td><td>Path to the directory where all patches for specs are stored. Patches
+		may be stored inside subdirectories.</td><td>"<code class="filename">#{Config._PATCHES}</code>"</td></tr><tr><td><code class="varname">_DISTFILESDIR</code></td><td>Path to the directory where all downloaded files should be
+		stored.</td><td>"<code class="filename">#{Config._DISTFILES}</code>"</td></tr></tbody></table></div><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+Note that while <code class="varname">Config._FILES</code>,
+<code class="varname">Config._PATCHESDIR</code>, <code class="varname">Config._DISTFILES</code> are
+separate convenience variables they may be defined in devball configuration as
+single path in file system.
+</div><p title="System information convenience variables"><b>System information convenience variables. </b>
+The following variables wrap system configuration as detected during devball
+initialization.
+</p><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><thead><tr><th>Variable</th><th>Meaning</th><th>Values</th></tr></thead><tbody><tr><td><code class="varname">_ARCH</code></td><td>System architecture</td><td><code class="literal">Arch::X86</code>, <code class="literal">Arch::X86_64</code></td></tr><tr><td><code class="varname">_PLATFORM</code></td><td>System platform</td><td><code class="literal">Platform::Linux</code>,
+		<code class="literal">Platform::Darwin</code></td></tr><tr><td><code class="varname">_RELEASE</code></td><td>System release, e.g. Linux kernel version, Mac OS X version. Note
+		that values are only specified for certain releases of Mac OS X.</td><td><code class="literal">Release::Tiger</code>,
+		<code class="literal">Release::SnowLeopard</code></td></tr></tbody></table></div><p title="Important spec variables"><b>Important spec variables. </b>
+The following variables usually should be explicitly set either inside spec or
+in the inherited extensions.
+</p><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><thead><tr><th>Variable</th><th>Meaning</th><th>Default</th></tr></thead><tbody><tr><td><code class="varname">_DEPENDENCIES</code></td><td>A list of spec dependencies, all specs mentioned in this variable
+		will be build before building this spec</td><td><code class="literal">[]</code></td></tr><tr><td><code class="varname">_FILES</code></td><td>Spec source files, by default all those file are unpacked into
+		"<code class="filename">#{_WORKDIR}</code>"</td><td><code class="literal">[]</code></td></tr><tr><td><code class="varname">_PATCHES</code></td><td>Spec patches, by default all patch files are applied to the unpacked
+		sources.</td><td><code class="literal">[]</code></td></tr><tr><td><code class="varname">_FEATURES</code></td><td>A list of features supported by spec.</td><td><code class="literal">""</code></td></tr><tr><td><code class="varname">_SRCDIR</code></td><td>Path to temporary build directory. All build related files should be
+		stored in this directory during <code class="function">src_unpack</code> phase. It
+		should only be set if it is different than default value</td><td><code class="literal">"#{_WORKDIR}/#{_P}"</code></td></tr></tbody></table></div><div class="tip" title="Tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="tip.variables"></a>Tip</h3><p>
+Example spec that defines important variables.
+</p><pre class="programlisting">
+_FILES! "#{_P}-stable.tar.gz"
+_SRCDIR! "#{_WORKDIR}/#{_P}-stable"
+_DEPENDENCIES! "ncurses", "zlib"
+_FEATURES! "debug"
+</pre></div></div><div class="section" title="3.3. Using extensions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="section.spec-extensions"></a>3.3. Using extensions</h2></div></div></div><p>
+An extension is a collection of functions that may be shared between different
+spec files
+</p><p title="The inherit function"><b>The <code class="function">inherit</code> function. </b>
+To use extension it must be inherited. This is done using
+<code class="function">inherit</code> function and it automatically sources relevant
+extension from <code class="filename">_SPECSDIR/ext</code> directory.
+</p><p title="Filename inherit"><b>Filename <code class="function">inherit</code>. </b>
+It is possible to specify single extension <code class="function">inherit</code> through
+filename, e.g. <code class="filename">devball:gem-0.9.spec</code> will
+<code class="function">inherit</code> <code class="literal">gem</code> extension.
+</p><div class="tip" title="Tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+Using filename <code class="function">inherit</code> it is possible to create generic
+extension that will handle multiple similar specs, while each spec would be an
+empty file.
+</p></div></div><div class="section" title="3.4. Spec phases"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id388101"></a>3.4. Spec phases</h2></div></div></div><p>
+When certain spec is installed or uninstalled a number of phases is executed.
+Each phase is used to execute certain action related to spec installation such
+as unpacking sources or compilation. Execution order and working directories are
+defined as follows:
+</p><div class="table"><a name="id388112"></a><p class="title"><b>Table 3.1. Spec installation phase order</b></p><div class="table-contents"><table summary="Spec installation phase order" border="0"><colgroup><col><col align="center"></colgroup><thead><tr><th>Phase</th><th align="center">Working directory</th></tr></thead><tbody><tr><td><code class="function">pkg_config</code></td><td align="center">"<code class="filename">#{_WORKDIR}</code>"</td></tr><tr><td><code class="function">src_fetch</code></td><td align="center">"<code class="filename">#{_WORKDIR}</code>"</td></tr><tr><td><code class="function">src_unpack</code></td><td align="center">"<code class="filename">#{_WORKDIR}</code>"</td></tr><tr><td><code class="function">src_prepare</code></td><td align="center">"<code class="filename">#{_SRCDIR}</code>"</td></tr><tr><td><code class="function">src_configure</code></td><td align="center">"<code class="filename">#{_SRCDIR}</code>"</td></tr><tr><td><code class="function">src_compile</code></td><td align="center">"<code class="filename">#{_SRCDIR}</code>"</td></tr><tr><td><code class="function">src_install</code></td><td align="center">"<code class="filename">#{_SRCDIR}</code>"</td></tr><tr><td><code class="function">pkg_preinstall</code></td><td align="center">"<code class="filename">#{_SRCDIR}</code>"</td></tr><tr><td><code class="function">pkg_postinstall</code></td><td align="center">"<code class="filename">#{_SRCDIR}</code>"</td></tr></tbody></table></div></div><br class="table-break"><div class="table"><a name="id388278"></a><p class="title"><b>Table 3.2. Spec uninstallation phase order</b></p><div class="table-contents"><table summary="Spec uninstallation phase order" border="0"><colgroup><col><col align="center"></colgroup><thead><tr><th>Phase</th><th align="center">Working directory</th></tr></thead><tbody><tr><td><code class="function">pkg_preuninstall</code></td><td align="center">(not set)</td></tr><tr><td><code class="function">pkg_postuninstall</code></td><td align="center">(not set)</td></tr></tbody></table></div></div><br class="table-break"><p>
+Default implementations of <code class="function">src_unpack</code>,
+<code class="function">src_prepare</code>, <code class="function">src_configure</code>,
+<code class="function">src_compile</code> and <code class="function">src_install</code> are
+defined for common scenario of autotools enabled application. When certain
+customization of phase is needed default implementation may be still called
+using <code class="function">default_*</code> form, i.e.
+<code class="function">default_src_unpack</code>.
+</p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+Not defined or undefined phases are skipped.
+</p></div><div class="section" title="3.4.1. pkg_config"><div class="titlepage"><div><div><h3 class="title"><a name="id388365"></a>3.4.1. <code class="function">pkg_config</code></h3></div></div></div><p>
+Phase that can be used to perform initial configuration of the environment,
+check runtime requirements or execute some actions before actual installation of
+the spec.
+</p></div><div class="section" title="3.4.2. src_fetch"><div class="titlepage"><div><div><h3 class="title"><a name="id388377"></a>3.4.2. <code class="function">src_fetch</code></h3></div></div></div><p>
+This phase should download all sources that will be used in all subsequent
+phases. Default <code class="function">src_fetch</code> is not defined as we assume that
+files are stored either in "<code class="filename">#{_FILESDIR}</code>"
+or "<code class="filename">#{_DISTFILESDIR}</code>".
+</p><div class="example"><a name="id388399"></a><p class="title"><b>Example 3.1. Default <code class="function">src_fetch</code> phase implementation</b></p><div class="example-contents"><pre class="programlisting">
+def default_src_fetch
+end
+</pre></div></div><br class="example-break"></div><div class="section" title="3.4.3. src_unpack"><div class="titlepage"><div><div><h3 class="title"><a name="id388414"></a>3.4.3. <code class="function">src_unpack</code></h3></div></div></div><p>
+This phase should extract any spec sources and put them inside "<code class="filename">#{_SRCDIR}</code>" directory. Default implementation
+unpacks all <code class="varname">_FILES</code>.
+</p><div class="example"><a name="id388432"></a><p class="title"><b>Example 3.2. Default <code class="function">src_unpack</code> phase implementation</b></p><div class="example-contents"><pre class="programlisting">
+def default_src_unpack
+	unpack _FILES
+end
+</pre></div></div><br class="example-break"></div><div class="section" title="3.4.4. src_prepare"><div class="titlepage"><div><div><h3 class="title"><a name="id388448"></a>3.4.4. <code class="function">src_prepare</code></h3></div></div></div><p>
+This phase should prepare sources for compilation. This include patching or
+manual modification of spec source files before acutall compilation phase.
+Default implementation applies all patches from <code class="varname">_PATCHES</code>
+variable.
+</p><div class="example"><a name="id388463"></a><p class="title"><b>Example 3.3. Default <code class="function">src_prepare</code> phase implementation</b></p><div class="example-contents"><pre class="programlisting">
+def default_src_prepare
+	patch _PATCHES
+end
+</pre></div></div><br class="example-break"></div><div class="section" title="3.4.5. src_configure"><div class="titlepage"><div><div><h3 class="title"><a name="id388479"></a>3.4.5. <code class="function">src_configure</code></h3></div></div></div><p>
+This phase should configure sources to generate are compilation related files.
+This usually involves calling configure script. Default implementation executes
+configure script using a set of flags to indicate installation prefix location,
+system architecture, etc.
+</p><div class="example"><a name="id388491"></a><p class="title"><b>Example 3.4. Default <code class="function">src_configure</code> phase implementation</b></p><div class="example-contents"><pre class="programlisting">
+def default_src_configure
+	configure
+end
+</pre></div></div><br class="example-break"></div><div class="section" title="3.4.6. src_compile"><div class="titlepage"><div><div><h3 class="title"><a name="id388507"></a>3.4.6. <code class="function">src_compile</code></h3></div></div></div><p>
+This phase should compile and build spec. Default implementation executes
+<span class="command"><strong>make</strong></span> command.
+</p><div class="example"><a name="id388520"></a><p class="title"><b>Example 3.5. Default <code class="function">src_compile</code> phase implementation</b></p><div class="example-contents"><pre class="programlisting">
+def default_src_compile
+	make
+end
+</pre></div></div><br class="example-break"><p title="src_compile phase parallelization"><b><code class="function">src_compile</code> phase parallelization. </b>
+Some installation <code class="filename">Makefile</code> files may not be designed to be
+parallelized. As <code class="function">make</code> function behaviour is customized by
+<code class="varname">Config._MAKEFLAGS</code> configuration option it may be needed to
+force sequential installation using <code class="option">-j1</code> option as in <a class="link" href="#tip.phases.sequential" title="Force sequential installation">example</a>.
+</p></div><div class="section" title="3.4.7. src_install"><div class="titlepage"><div><div><h3 class="title"><a name="id388565"></a>3.4.7. <code class="function">src_install</code></h3></div></div></div><p>
+This phase should install spec to "<code class="filename">#{_DESTDIR}</code>" (or it's alias <code class="varname">_D</code>)
+directory. Default implementation executes <span class="command"><strong>make install</strong></span> with
+<code class="varname">DESTDIR</code> variable to specify temporary install location.
+</p><div class="example"><a name="id388590"></a><p class="title"><b>Example 3.6. Default <code class="function">src_install</code> phase implementation</b></p><div class="example-contents"><pre class="programlisting">
+def default_src_install
+	make %Q{DESTDIR="#{_D}" install}
+end
+</pre></div></div><br class="example-break"><p title="src_install phase notes."><b><code class="function">src_install</code> phase notes. </b>
+Often default implementation will be enough to install spec files into correct
+temporary location. Autotools powered packages usually support this, but in the
+case of customized build systems it may be necessary to either patch
+<code class="filename">Makefile</code> files or use other designated make variable (i.e.
+<code class="varname">INSTALL_PREFIX</code>). In some cases <code class="function">install</code>
+may help as it setup some other make options, but generally it shouldn't be
+used.
+</p><p title="src_install phase parallelization"><b><code class="function">src_install</code> phase parallelization. </b>
+Some installation <code class="filename">Makefile</code> files may not be designed to be
+parallelized. As <code class="function">make</code> function behaviour is customized by
+<code class="varname">Config._MAKEFLAGS</code> configuration option it may be needed to
+force sequential installation using <code class="option">-j1</code> option as in <a class="link" href="#tip.phases.sequential" title="Force sequential installation">example</a>.
+</p><div class="tip" title="Force sequential installation" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="tip.phases.sequential"></a>Force sequential installation</h3><pre class="programlisting">
+def src_install
+	make %Q{-j1 DESTDIR="#{_D}" install}
+end
+</pre></div></div><div class="section" title="3.4.8. pkg_preinstall"><div class="titlepage"><div><div><h3 class="title"><a name="id388672"></a>3.4.8. <code class="function">pkg_preinstall</code></h3></div></div></div><p>
+This utility phase is executed before spec image installation into "<code class="filename">#{_ROOT}</code>". It may be used to modify image files
+inside "<code class="filename">#{_D}</code>" for a particular system or
+adjust configuration files inside "<code class="filename">#{_D}/#{ROOT}/etc</code>". Default implementation is
+empty.
+</p></div><div class="section" title="3.4.9. pkg_postinstall"><div class="titlepage"><div><div><h3 class="title"><a name="id388699"></a>3.4.9. <code class="function">pkg_postinstall</code></h3></div></div></div><p>
+This utility phase is executed after spec image installation into "<code class="filename">#{_ROOT}</code>". It may be used to display some
+additional information or warnings to the user. Default implementation is empty.
+</p></div><div class="section" title="3.4.10. pkg_preuninstall"><div class="titlepage"><div><div><h3 class="title"><a name="id388717"></a>3.4.10. <code class="function">pkg_preuninstall</code></h3></div></div></div><p>
+This utility phase is executed before spec image removed from "<code class="filename">#{_ROOT}</code>". It may be used to clean files generated
+by normal use of the applications installed by spec such as temporary files.
+Default implementation is empty.
+</p></div><div class="section" title="3.4.11. pkg_postuninstall"><div class="titlepage"><div><div><h3 class="title"><a name="id388735"></a>3.4.11. <code class="function">pkg_postuninstall</code></h3></div></div></div><p>
+This utility phase is executed after spec image removal from "<code class="filename">#{_ROOT}</code>". It may be used to update symlinks or
+cache files that may contain data related to removed spec, i.e. mime database,
+icon cache, etc. Default implementation is empty.
+</p></div></div><div class="section" title="3.5. Spec functions reference"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id388757"></a>3.5. Spec functions reference</h2></div></div></div><p>
+Spec by default may use many functions that are internally provided. It is also
+easy to extend current capabilities with <a class="link" href="#section.spec-extensions" title="3.3. Using extensions">extensions</a>.
+</p><div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+In case of failure all functions raise <span class="type">Error::Package</span> exception
+with textual message describing actual problem.
+</p></div><div class="section" title="3.5.1. General functions reference"><div class="titlepage"><div><div><h3 class="title"><a name="id388783"></a>3.5.1. General functions reference</h3></div></div></div><p>
+The following functions are generally useful in specs and provide easy means to
+check for environment conditions or perform some general action. This category
+also includes function that are useful both in build and install related
+operations.
+</p><div class="informaltable"><table cellpadding="5" border="0"><colgroup><col width="175px"><col></colgroup><thead><tr><th>Function</th><th>Details</th></tr></thead><tbody><tr><td><code class="function">platform?</code> <em class="parameter"><code>platform</code></em></td><td>Check if system platform (<code class="varname">Config._PLATFORM</code>) is
+		<em class="parameter"><code>platform</code></em></td></tr><tr><td><code class="function">release?</code> <em class="parameter"><code>release</code></em></td><td>Check if system release (<code class="varname">Config._RELEASE</code>) is
+		<em class="parameter"><code>release</code></em></td></tr><tr><td><code class="function">exec</code> <em class="parameter"><code>command</code></em></td><td>Function executes <em class="parameter"><code>command</code></em>.
+		All output is redirected to <code class="constant">STDOUT</code>.</td></tr><tr><td><code class="function">exec_r</code> <em class="parameter"><code>command</code></em></td><td>Functions executes <em class="parameter"><code>command</code></em>
+		and redirects all output into return value.</td></tr><tr><td><code class="function">exec_v</code> <em class="parameter"><code>command</code></em>, <em class="parameter"><code>styled</code></em></td><td>Function echoes and executes <em class="parameter"><code>command</code></em>. If <em class="parameter"><code>styled</code></em> is <code class="constant">true</code> then
+		<em class="parameter"><code>command</code></em> echo is styled, however
+		<em class="parameter"><code>styled</code></em> is <code class="constant">false</code>
+		by default. All output is redirected to <code class="constant">STDOUT</code>.</td></tr><tr><td><code class="function">cmd</code> <em class="parameter"><code>command</code></em>, <em class="parameter"><code>styled</code></em></td><td>Alias for <code class="function">exec_v</code></td></tr><tr><td><code class="function">cmd_redir</code> <em class="parameter"><code>command</code></em></td><td>Alias for <code class="function">exec_r</code></td></tr><tr><td><code class="function">sed</code> <em class="parameter"><code>input</code></em>, <em class="parameter"><code>output</code></em>, <em class="parameter"><code>*cmds</code></em></td><td>Function executes <span class="command"><strong>sed</strong></span> <em class="parameter"><code>*cmds</code></em> on <em class="parameter"><code>input</code></em> file and redirects output to <em class="parameter"><code>output</code></em> file. Note that <em class="parameter"><code>*cmds</code></em> are quoted using <code class="constant">'</code>
+		character</td></tr><tr><td><code class="function">sed_i</code> <em class="parameter"><code>input</code></em>, <em class="parameter"><code>*cmds</code></em></td><td>Function executes <span class="command"><strong>sed</strong></span> <em class="parameter"><code>*cmds</code></em> on <em class="parameter"><code>input</code></em> file that is modified in-place. Note that
+		<em class="parameter"><code>*cmds</code></em> are quoted using
+		<code class="constant">'</code> character</td></tr><tr><td><code class="function">cd</code> <em class="parameter"><code>dir</code></em></td><td>Function changes current working directory to <em class="parameter"><code>dir</code></em>.</td></tr><tr><td><code class="function">mkdir</code> <em class="parameter"><code>dir</code></em></td><td>Function creates directory <em class="parameter"><code>dir</code></em></td></tr><tr><td><code class="function">mkdir_p</code> <em class="parameter"><code>dir</code></em></td><td>Function creates directory <em class="parameter"><code>dir</code></em> with all necessary parent
+		directories.</td></tr><tr><td><code class="function">touch</code> <em class="parameter"><code>file</code></em></td><td>Function changes <em class="parameter"><code>file</code></em>
+		timestamp. In the case when specified <em class="parameter"><code>file</code></em> does not exist function creates empty
+		<em class="parameter"><code>file</code></em>.</td></tr></tbody></table></div></div><div class="section" title="3.5.2. Build functions reference"><div class="titlepage"><div><div><h3 class="title"><a name="id389205"></a>3.5.2. Build functions reference</h3></div></div></div><p>
+The following functions are useful during build related phases, including
+<code class="function">src_fetch</code>, <code class="function">src_unpack</code>,
+<code class="function">src_configure</code>, <code class="function">src_compile</code> and
+<code class="function">src_install</code>
+</p><div class="informaltable"><table cellpadding="5" border="0"><colgroup><col width="175px"><col></colgroup><thead><tr><th>Function</th><th>Details</th></tr></thead><tbody><tr><td><code class="function">unpack</code> <em class="parameter"><code>files</code></em></td><td>Unpack specified file(s). It can be either single <span class="type">String</span>
+		or <span class="type">Array</span>. Function supports tar, gzip and bzip2
+		archives.</td></tr><tr><td><code class="function">patch</code> <em class="parameter"><code>files</code></em>, <em class="parameter"><code>options</code></em></td><td>Process specified patch(es). It can be either single <span class="type">String</span>
+		or <span class="type">Array</span>. Function automatically figures out which patch level
+		should be used, but it is possible to overwrite this behaviour, by
+		specifying correct options, i.e. <code class="option">-p1</code>.</td></tr><tr><td><code class="function">autoreconf</code></td><td>Rebuilds autotools enabled build system by calling
+		<span class="command"><strong>aclocal</strong></span>, <span class="command"><strong>autoheader</strong></span>,
+		<span class="command"><strong>automake</strong></span>, <span class="command"><strong>autoconf</strong></span> and
+		<span class="command"><strong>libtoolize</strong></span> system utilities.</td></tr><tr><td><code class="function">configure</code> <em class="parameter"><code>myconf</code></em></td><td>Function executes <span class="command"><strong>./configure</strong></span> script with a set of
+		flags to indicate correct locations for files (relative to "<code class="filename">#{_ROOT}</code>" and "<code class="filename">#{_PREFIX}</code>" paths. It additionally sets up
+		<code class="option">--build</code> and <code class="option">--host</code> flags according to
+		<code class="varname">Config._CHOST</code> configuration variable. Custom flags may be
+		specified  using <em class="parameter"><code>myconf</code></em>
+		<span class="type">String</span> parameter.</td></tr><tr><td><code class="function">opt_with</code> <em class="parameter"><code>*flags</code></em></td><td>Creates string with multiple "--with-<code class="varname">flag</code>" flags
+		using supplied <em class="parameter"><code>*flags</code></em>
+		parameter. This may be helpful to generate multiple
+		<span class="command"><strong>./configure</strong></span> options.</td></tr><tr><td><code class="function">opt_without</code> <em class="parameter"><code>*flags</code></em></td><td>Creates string with multiple "--without-<code class="varname">flag</code>"
+		flags using supplied <em class="parameter"><code>*flags</code></em>
+		parameter. This may be helpful to generate multiple
+		<span class="command"><strong>./configure</strong></span> options.</td></tr><tr><td><code class="function">opt_enable</code> <em class="parameter"><code>*flags</code></em></td><td>Creates string with multiple "--enable-<code class="varname">flag</code>" flags
+		using supplied <em class="parameter"><code>*flags</code></em> parameter.
+		This may be helpful to generate multiple <span class="command"><strong>./configure</strong></span>
+		options.</td></tr><tr><td><code class="function">opt_disable</code> <em class="parameter"><code>*flags</code></em></td><td>Creates string with multiple "--disable-<code class="varname">flag</code>"
+		flags using supplied <em class="parameter"><code>*flags</code></em>
+		parameter. This may be helpful to generate multiple
+		<span class="command"><strong>./configure</strong></span> options.</td></tr><tr><td><code class="function">make</code> <em class="parameter"><code>options</code></em></td><td>Function executes <span class="command"><strong>make</strong></span> command and passes all
+		specified <em class="parameter"><code>options</code></em>. It always uses
+		<code class="varname">_MAKEFLAGS</code> as parameters, however <em class="parameter"><code>options</code></em> do overwrite them.</td></tr><tr><td><code class="function">make_install</code> <em class="parameter"><code>options</code></em></td><td>Function executes <span class="command"><strong>make install</strong></span> command and passes
+		all specified <em class="parameter"><code>options</code></em>. It always
+		uses <code class="varname">_MAKEFLAGS</code> as parameters, however <em class="parameter"><code>options</code></em> do overwrite them. This function is
+		provided for legacy <code class="filename">Makefiles</code> and sets multiple
+		<span class="command"><strong>make</strong></span> variables to install files in correct locations
+		inside "<code class="filename">#{_DESTDIR}</code>" directory. It
+		should only be used if <code class="code">make Q%{DESTDIR="#{_D}"
+		install}</code> is unsuitable.</td></tr><tr><td><code class="function">http_download</code> <em class="parameter"><code>name</code></em>, <em class="parameter"><code>url</code></em></td><td>Function downloads specified <em class="parameter"><code>url</code></em> and saves it as file <em class="parameter"><code>name</code></em>.</td></tr></tbody></table></div></div><div class="section" title="3.5.3. Install functions reference"><div class="titlepage"><div><div><h3 class="title"><a name="id389624"></a>3.5.3. Install functions reference</h3></div></div></div><p>
+The following functions are useful to perform some installation related task.
+Those functions automatically handle <code class="varname">_DESTDIR</code> and
+<code class="varname">_PREFIX</code> variables to put files in correct locations. In most
+of the cases only relative paths to "<code class="filename">#{_SRCDIR}</code>" directory can be used as by default
+<code class="function">src_install</code> phase is executed inside that directory.
+</p><div class="informaltable"><table border="0"><colgroup><col width="175px"><col></colgroup><thead><tr><th>Function</th><th>Details</th></tr></thead><tbody><tr><td><code class="function">install_bin</code> <em class="parameter"><code>files</code></em></td><td>Function installs specified <em class="parameter"><code>files</code></em> from "<code class="filename">#{_SRCDIR}</code>" into <code class="filename">bin</code> directory inside spec image. Function
+		automatically handles permissions.</td></tr><tr><td><code class="function">install_man</code> <em class="parameter"><code>files</code></em></td><td>Function installs specified <em class="parameter"><code>files</code></em> from "<code class="filename">#{_SRCDIR}</code>" into <code class="filename">man</code> directory inside spec image. Function
+		automatically handles manual sections and permissions.</td></tr></tbody></table></div></div></div></div></div></body></html>
