@@ -3,6 +3,7 @@ require 'lib/util'
 
 require 'fileutils'
 require 'net/http'
+require 'net/ftp'
 
 module Devball
 
@@ -25,7 +26,7 @@ class Package
 			end
 
 			puts ">>> Fetching #{file} from #{url}"
-			http_download "#{_DISTFILESDIR}/#{file}", url
+			download "#{_DISTFILESDIR}/#{file}", url
 		end
 	end
 
@@ -253,8 +254,28 @@ class Package
 		raise Error::Package.new("sed failed") if retval != 0
 	end
 
-	def http_download(file, url, depth = 0)
+	def http_download(file, url_or_uri, depth = 0)
 		raise Error::Package.new("HTTP redirect too deep") if depth > 10
+
+		# initialize uri, url
+		uri, url = nil, nil
+
+		# handle url to uri conversion
+		case url_or_uri
+		when String
+			uri = URI.parse(url_or_uri)
+			url = url_or_uri
+
+			# validate correct scheme
+			unless uri.kind_of? URI::HTTP
+				raise Error::Package.new("Not HTTP url: #{url_or_uri}")
+			end
+
+		when URI::HTTP
+			uri, url = url_or_uri, url_or_uri.to_s
+		else
+			raise Error::Package.new("Not HTTP uri: #{url_or_uri}")
+		end
 
 		if (depth == 0)
 			puts ">>> Downloading #{url} => #{File.basename(file)}"
@@ -262,7 +283,7 @@ class Package
 			puts ">>> Redirected to #{url}"
 		end
 
-		uri = URI.parse(url)
+		# process request
 		response = Net::HTTP.get_response(uri)
 		case response
 		when Net::HTTPSuccess
@@ -273,6 +294,48 @@ class Package
 			http_download(file, response["location"], depth + 1)
 		else
 			raise Error::Package.new("HTTP download failed")
+		end
+	end
+
+	def ftp_download(file, url_or_uri)
+		# initialize uri, url
+		uri, url = nil, nil
+
+		# handle url to uri conversion
+		case url_or_uri
+		when String
+			uri = URI.parse(url_or_uri)
+			url = url_or_uri
+
+			# validate correct scheme
+			unless uri.kind_of? URI::FTP
+				raise Error::Package.new("Not FTP url: #{url_or_uri}")
+			end
+
+		when URI::FTP
+			uri, url = url_or_uri, url_or_uri.to_s
+		else
+			raise Error::Package.new("Not FTP uri: #{url_or_uri}")
+		end
+
+		puts ">>> Downloading #{url} => #{File.basename(file)}"
+
+		# process request
+		Net::FTP.open(uri.host, "anonymous") do |ftp|
+			ftp.getbinaryfile(uri.path, file)
+		end
+	end
+
+	def download(file, url)
+		uri = URI.parse(url)
+
+		case uri
+		when URI::HTTP
+			http_download(file, uri)
+		when URI::FTP
+			ftp_download(file, uri)
+		else
+			raise Error::Package.new("Not supported url scheme")
 		end
 	end
 
