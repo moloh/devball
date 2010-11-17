@@ -63,6 +63,26 @@ class Version
 		end
 	end
 
+	def format(parts = '.', letter = '', suffix = '_')
+		if (@letter.nil?)
+			if (@suffix.nil?)
+				"#{@parts.join(parts)}"
+			elsif (@suffix.data.nil?)
+				"#{@parts.join(parts)}#{suffix}#{@suffix.nick}"
+			else
+				"#{@parts.join(parts)}#{suffix}#{@suffix.nick}#{@suffix.data}"
+			end
+		else
+			if (@suffix.nil?)
+				"#{@parts.join(parts)}#{letter}#{@letter}"
+			elsif (@suffix.data.nil?)
+				"#{@parts.join(parts)}#{letter}#{@letter}#{suffix}#{@suffix.nick}"
+			else
+				"#{@parts.join(parts)}#{letter}#{@letter}#{suffix}#{@suffix.nick}#{@suffix.data}"
+			end
+		end
+	end
+
 	def eql?(other)
 		return self == other
 	end
