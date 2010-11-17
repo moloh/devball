@@ -96,10 +96,9 @@ class Package
 			puts ">>> Applying patch #{File.basename(file)}"
 
 			command = case File.extname(file)
-			when "gz" then "gzip -dc"
-			when ".diff", ".patch", "" then "cat"
-			else
-				raise Error::Package.new("unknown patch type: #{file}")
+			when ".gz" then "gzip -dc"
+			when ".diff", ".patch" then "cat"
+			else "cat"
 			end << %Q{ "#{file}" | patch #{options}}
 
 			# guess correct -p
