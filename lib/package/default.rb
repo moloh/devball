@@ -5,7 +5,6 @@ module Devball
 class Package
 	def default_src_fetch
 		fetch _URLS.keys
-		#fetch _URLS
 	end
 
 	def default_src_unpack
