@@ -13,6 +13,7 @@ class Package
 		case urls
 		when String then urls = [urls]
 		when Array  then urls.flatten!
+		when Hash   then urls
 		end
 
 		urls.each do |url, file|
